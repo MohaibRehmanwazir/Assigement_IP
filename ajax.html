@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>using ajax</title>
+     <link rel="stylesheet" href="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js">
+     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button onclick="loadData()">change...</button>
+    <div id="data"></div>
+    <script>
+        let html = ''
+        const loadData = () =>{
+            fetch("https://fakestoreapi.com/products")
+            .then(data=>data.json())
+            .then(products =>{
+                html = `<table border=2 class="table table-hover">`
+                            html+=`
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                </tr>`
+                                products.map(product=>{
+                                    return html+=`
+                                    <tr>
+                                    <td>${product.id}</td>
+                                    <td>${product.title}</td>
+                                    <td>${product.price}</td>
+                                    <td><img src=${product.image} width=100 height=100></td>
+                                </tr>`
+                                })
+                                html+=`</table>`
+                                document.getElementById("data").innerHTML=html;
+                                
+            })
+        }
+    </script>
+    
+</body>
+</html>
